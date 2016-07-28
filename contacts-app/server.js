@@ -54,16 +54,5 @@ app.put('/edit-contact/:id', function (req, res){
 
 
 
-
-
-
-app.put('/edit/:id',function(req,res){
-	var id=req.params.id;
-	console.log(id);
-	db.contacts.update
-})
-
-
-
 app.listen(3000);
 console.log('listening on port 3000');
