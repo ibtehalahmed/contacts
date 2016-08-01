@@ -7,16 +7,19 @@ module.exports = function(app) {
             phone: req.body.phone
         });
         newContact.save(function (err) {
-            if (err)res.send("this contact already exists phone should be unique ");
-            else
+            if (err){
+                res.statusCode(500).send("this contact already exists phone should be unique ");
+                return;
+            }
             res.send("added successfully");
         });
     });
     app.get('/', function (req, res) {
         Contact.find(function (err,docs) {
             if (err)
-                res.send('error');
-            else
+            {
+                res.statusCode(500).send('error');
+            }
                 res.send(docs);
 
         });
@@ -25,17 +28,18 @@ module.exports = function(app) {
         var id = req.params.id;
        Contact.remove({_id: id}, function (err) {
             if (err)
-                res.send("contact not found")
-           else
+            {
+                res.statusCode(500).send("contact not found")
+            }
                res.send("deleted successfully")
         });
     });
     app.get('/contact/:id', function (req, res) {
         var id = req.params.id;
         Contact.findOne({_id: id}, function (err,doc) {
-            if(err)
-                res.send("not found");
-            else
+            if(err){
+                res.statusCode(500).send("not found");
+            }
                 res.send(doc);
         });
     });
@@ -43,8 +47,10 @@ module.exports = function(app) {
         var query = { _id: req.params.id };
         Contact.update(query, { name: req.body.name , phone: req.body.phone }, function(err){
             if(err )
-                res.send("this phone number already exists , phone should be unique");
-            else
+            {
+                res.statusCode(500).send("this phone number already exists , phone should be unique");
+            }
+
                 res.send("updated successfully")
         });
     });
