@@ -1,4 +1,6 @@
 var Contact =require('../models/contact');
+
+var path = require('path');
 module.exports = function(app) {
 
     app.post('/add', function (req, res) {
@@ -14,14 +16,13 @@ module.exports = function(app) {
             res.send("added successfully");
         });
     });
-    app.get('/', function (req, res) {
+    app.get('/contacts', function (req, res) {
         Contact.find(function (err,docs) {
             if (err)
             {
                 res.statusCode(500).send('error');
             }
-                res.send(docs);
-
+            res.send(docs);
         });
     });
     app.delete('/delete/:id', function (req, res) {
